@@ -1,17 +1,30 @@
 import H4 from "../../shared/components/H4";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { ILoginRequest } from "../interfaces/loginRequest";
+import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginSchema } from "../../schemas/LoginSchema";
+import LoginInput from "./LoginInput";
+import { loginHandler } from "../utils";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const defaultValues = {
+  email: "",
+  password: "",
+};
+const Login: React.FC = () => {
+  const navigate = useNavigate();
 
-  // const dispatch = useDispatch();
+  const methods = useForm<ILoginRequest>({
+    resolver: yupResolver(LoginSchema),
+    defaultValues,
+  });
 
-  console.log(email, password);
-
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onSubmit = async (data: ILoginRequest) => {
+    const resp = await loginHandler({ data });
+    if (resp) navigate("/");
+    else {
+      console.log("Invalid credentials");
+    }
   };
 
   return (
@@ -19,48 +32,12 @@ const Login = () => {
       <div className=" flex flex-col justify-center p-10 ">
         <div className="w-full p-6 m-auto max-w-xl bg-white shadow-md">
           <H4 styles="text-center">Sign in to your account</H4>
-          <form className="mt-6">
-            <div className="mb-2">
-              <label className=" text-small font-regularBold text-gray-dark">
-                Email
-              </label>
-              <input
-                value={email}
-                type="email"
-                className=" w-full px-4 py-2 mt-2  bg-gray-light"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {/* {errors.email && (
-                <span className="text-error">{errors.email.message}</span>
-              )} */}
-            </div>
-            <div className="mb-2">
-              <label className=" text-small font-regularBold text-gray-dark">
-                Password
-              </label>
-              <input
-                value={password}
-                type="password"
-                className=" w-full px-4 py-2 mt-2 bg-gray-light"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {/* {errors.password && (
-                <span className="text-error">{errors.password.message}</span>
-              )} */}
-            </div>
-
-            <a href="#" className="text-small m-auto text-right">
-              Forget Password?
-            </a>
-            <div className="mt-6">
-              <button
-                onClick={handleSubmit}
-                className="w-full px-4 py-2 bg-primary text-white"
-              >
-                Sign In
-              </button>
-            </div>
-          </form>
+          <FormProvider {...methods}>
+            {" "}
+            <form className="mt-6" onSubmit={methods.handleSubmit(onSubmit)}>
+              <LoginInput />
+            </form>
+          </FormProvider>
 
           <p className="mt-8 text-small  font-light text-center text-gray-dark">
             Don't have an account?
