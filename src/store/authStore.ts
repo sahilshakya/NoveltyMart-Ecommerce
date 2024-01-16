@@ -1,4 +1,3 @@
-import axios from "axios";
 import { create } from "zustand";
 
 interface User {
@@ -11,8 +10,11 @@ interface AuthStore {
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  setIsAuthenticated: (authenticated: boolean) => void;
+  // token: string;
+  // setToken: (newToken: string) => void;
+
+  // logout: () => void;
 }
 
 const useAuthStore = create<AuthStore>()((set) => ({
@@ -20,44 +22,19 @@ const useAuthStore = create<AuthStore>()((set) => ({
   isAuthenticated: false,
   loading: false,
   error: null,
-  login: async (email: string, password: string) => {
-    set((state) => ({ ...state, loading: true, error: null }));
+  setIsAuthenticated: (authenticated) =>
+    set({ isAuthenticated: authenticated }),
+  // token: "",
+  // setToken: (newToken) => set({ token: newToken }),
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/v1/users/login",
-        {
-          email,
-          password,
-        }
-      );
-
-      if (!response.data.success) {
-        throw new Error("Invalid response from server");
-      } else {
-        const token = response.data.data.token;
-        localStorage.setItem("authToken", token);
-      }
-
-      set((state) => ({
-        ...state,
-        user: response.data.data,
-        isAuthenticated: true,
-        loading: false,
-      }));
-    } catch (error) {
-      set((state) => ({ ...state, loading: false }));
-      console.error(error); // Log the error for debugging
-    }
-  },
-  logout: () => {
-    localStorage.removeItem("authToken");
-    set((state) => ({
-      ...state,
-      user: null,
-      isAuthenticated: false,
-    }));
-  },
+  // logout: () => {
+  //   localStorage.removeItem("authToken");
+  //   set((state) => ({
+  //     ...state,
+  //     user: null,
+  //     isAuthenticated: false,
+  //   }));
+  // },
 }));
 
 export default useAuthStore;

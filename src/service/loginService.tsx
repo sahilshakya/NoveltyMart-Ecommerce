@@ -20,6 +20,7 @@ import { ILoginRequest } from "../login/interfaces/loginRequest";
 export const login = async (body: ILoginRequest) => {
   try {
     const data = await ApiRequest.post(ROUTES_NAME.LOGIN, body);
+
     return data;
   } catch (err) {
     console.log(err);

@@ -6,11 +6,13 @@ import { LoginSchema } from "../../schemas/LoginSchema";
 import LoginInput from "./LoginInput";
 import { loginHandler } from "../utils";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../store/authStore";
 
 const defaultValues = {
   email: "",
   password: "",
 };
+
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
@@ -20,10 +22,18 @@ const Login: React.FC = () => {
   });
 
   const onSubmit = async (data: ILoginRequest) => {
-    const resp = await loginHandler({ data });
-    if (resp) navigate("/");
-    else {
-      console.log("Invalid credentials");
+    try {
+      const resp = await loginHandler({ data });
+      if (resp) {
+        useAuthStore.getState().setIsAuthenticated(true);
+
+        navigate("/");
+      } else {
+        console.error("Login failed");
+      }
+      return resp;
+    } catch (error) {
+      console.log("login error", error);
     }
   };
 
