@@ -1,18 +1,19 @@
-import { useState } from "react";
-import H5 from "../../shared/components/H5";
-import CartProducts from "./CartProducts";
-import Summary from "./Summary";
+import H5 from "../../shared/components/ui/H5";
+import useCartStore from "../../store/cartStore";
+import CartProducts from "../components/CartProducts";
+import Summary from "../components/Summary";
 
 const CartPage = () => {
-  const [cart, setCart] = useState([]);
+  const { cart } = useCartStore();
 
   return (
     <div>
-      <div className="bg-gray-light p-5 px-12 h-screen  pt-20">
+      <div>
         <H5>Your Cart</H5>
-        <div className="flex ">
+        <div className="lg:flex justify-between mt-5 gap-6">
           <CartProducts />
-          <Summary />
+
+          {cart.length >= 1 ? <Summary /> : null}
         </div>
       </div>
     </div>

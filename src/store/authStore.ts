@@ -1,40 +1,22 @@
 import { create } from "zustand";
+import { User } from "../shared/interfaces/userType";
+import { devtools } from "zustand/middleware";
 
-interface User {
-  id: number;
-  email: string;
-  password: string;
-}
 interface AuthStore {
   user: User | null;
-  isAuthenticated: boolean;
-  loading: boolean;
-  error: string | null;
-  setIsAuthenticated: (authenticated: boolean) => void;
-  // token: string;
-  // setToken: (newToken: string) => void;
-
-  // logout: () => void;
+  setAuthData: (data: User | null) => void;
 }
 
-const useAuthStore = create<AuthStore>()((set) => ({
-  user: null,
-  isAuthenticated: false,
-  loading: false,
-  error: null,
-  setIsAuthenticated: (authenticated) =>
-    set({ isAuthenticated: authenticated }),
-  // token: "",
-  // setToken: (newToken) => set({ token: newToken }),
-
-  // logout: () => {
-  //   localStorage.removeItem("authToken");
-  //   set((state) => ({
-  //     ...state,
-  //     user: null,
-  //     isAuthenticated: false,
-  //   }));
-  // },
-}));
+const useAuthStore = create<AuthStore>()(
+  devtools((set) => ({
+    user: null,
+    setAuthData: (data) => {
+      set((state) => ({
+        ...state,
+        user: data,
+      }));
+    },
+  }))
+);
 
 export default useAuthStore;

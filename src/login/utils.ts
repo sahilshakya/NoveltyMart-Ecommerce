@@ -1,7 +1,10 @@
-import { login } from "../service/loginService";
+import { jwtDecode } from "../shared/utils/jwt";
+import { login } from "./loginService";
+import { setLocal } from "../shared/utils/storage";
 import { ILoginRequest } from "./interfaces/loginRequest";
+import { User } from "../shared/interfaces/userType";
 
-export const loginHandler = async ({ data }: { data: ILoginRequest }) => {
+export const LoginHandler = async ({ data }: { data: ILoginRequest }) => {
   try {
     const payload = {
       email: data.email,
@@ -11,8 +14,11 @@ export const loginHandler = async ({ data }: { data: ILoginRequest }) => {
     const loginReq = await login(payload);
     if (loginReq) {
       const token = loginReq.data.token;
-      localStorage.setItem("authToken", token);
-      return token;
+      setLocal("authToken", token);
+      // setAuthData(token);
+      const decoded: User = jwtDecode(token);
+
+      return decoded;
     }
   } catch (err) {
     console.log(err);

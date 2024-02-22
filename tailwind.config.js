@@ -13,9 +13,7 @@ export default {
       error: "#B3251E",
       warning: "#F6BD41",
     },
-    fontFamily: {
-      poppins: ["Poppins"],
-    },
+
     fontSize: {
       h1: "2.5rem",
       h2: "2.25rem",
@@ -23,14 +21,23 @@ export default {
       h4: "1.75rem",
       h5: "1.5rem",
       h6: "1.25rem",
+      big: "26px",
       normal: "24px",
       small: "18px",
+      regularSmall: "16px",
+      extraSmall: "14px",
+      verySmall: "10px",
     },
     fontWeight: {
       bold: "600",
+      semiBold: "500",
       regularBold: "400",
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        poppins: ["Poppins"],
+      },
+    },
   },
   plugins: [],
 };
