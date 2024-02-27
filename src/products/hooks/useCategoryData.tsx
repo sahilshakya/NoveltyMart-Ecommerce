@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { useErrorBoundary } from "react-error-boundary";
 import { AdaptedCategory } from "../../category/interfaces/category";
 import { fetchCategory } from "../../category/categoryService";

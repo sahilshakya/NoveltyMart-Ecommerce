@@ -1,27 +1,26 @@
-import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchProductDetails } from "../productsService";
-import { AdaptedProduct, Image } from "../interfaces/product";
+import { AdaptedProduct } from "../interfaces/product";
 import useCartStore from "../../store/cartStore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AxiosError } from "axios";
 import { uiRoutes } from "../../shared/constant/uiRoutes";
-import { useErrorBoundary } from "react-error-boundary";
+import { useProductData } from "../hooks/useProductData";
+import ProductImages from "../components/ProductImages";
 
 const SingleProduct = () => {
-  const [product, setProduct] = useState<AdaptedProduct | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [quantity, setQuantity] = useState({
-    value: 1,
-    error: "",
-  });
-  const [mainImages, setMainImages] = useState<Image | null>(null);
   const { addToCart } = useCartStore();
-  const { id } = useParams();
+  const { id = "" } = useParams();
   const navigate = useNavigate();
-  const { showBoundary } = useErrorBoundary();
+
+  const {
+    product,
+    isLoading,
+    error,
+    quantity,
+    setQuantity,
+    mainImages,
+    setMainImages,
+  } = useProductData(id);
 
   const handleAddToCart = (productToAdd: AdaptedProduct) => {
     addToCart(productToAdd, quantity.value);
@@ -32,29 +31,6 @@ const SingleProduct = () => {
     addToCart(productToBuy, quantity.value);
     navigate(uiRoutes.cart);
   };
-
-  const getProductDetails = useCallback(
-    async (productId: string) => {
-      try {
-        const res = await fetchProductDetails(productId);
-        setProduct(res.data);
-        setMainImages(res.data.images[0]);
-      } catch (err: unknown) {
-        showBoundary(err);
-        setError((err as AxiosError).message);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [showBoundary]
-  );
-
-  /**
-   * Side effect for fetching product detail on component mount
-   */
-  useEffect(() => {
-    id && getProductDetails(id);
-  }, [id, getProductDetails]);
 
   if (isLoading) {
     return (
@@ -90,16 +66,7 @@ const SingleProduct = () => {
         </div>
 
         <div className="flex md:flex-col justify-between gap-1 ">
-          {product.images?.map((item, index) => (
-            <div className="" key={index}>
-              <img
-                className=" w-[130px] h-[120px] object-center  "
-                alt="prod img"
-                src={item.image}
-                onClick={() => setMainImages(item)}
-              />
-            </div>
-          ))}
+          <ProductImages product={product} setMainImages={setMainImages} />
         </div>
 
         <div className=" flex-1 px-6 ">

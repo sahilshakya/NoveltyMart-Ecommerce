@@ -6,6 +6,7 @@ export const useLoginHandler = () => {
 
   const handleLoginSuccess = (resp: User) => {
     setAuthData(resp);
+    console.log(resp);
   };
 
   return {

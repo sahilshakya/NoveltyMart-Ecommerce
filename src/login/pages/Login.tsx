@@ -24,7 +24,9 @@ const Login: React.FC = () => {
   const onSubmit = async (data: ILoginRequest) => {
     try {
       const resp = await LoginHandler({ data });
+
       if (resp) {
+        console.log(resp);
         handleLoginSuccess(resp);
       } else {
         toast.error("Incorrect Email/Password");

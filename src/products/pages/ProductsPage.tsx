@@ -5,8 +5,8 @@ import Pagination from "../../shared/components/Pagination";
 import { ErrorBoundary } from "react-error-boundary";
 import ProductFetchingError from "../../shared/errors/ProductFetchingError";
 
-import useCategory from "../hooks/useCategory";
-import useProductState from "../hooks/useProductState";
+import useCategory from "../hooks/useCategoryData";
+import useProductState from "../hooks/useProductsData";
 
 const ProductsPage = () => {
   const {
@@ -16,9 +16,25 @@ const ProductsPage = () => {
     setCurrentPage,
     totalPages,
     setSelectedCategory,
+    isLoading,
+    isError,
+    error,
   } = useProductState();
 
   const { allCategories, setMinPrice, setMaxPrice } = useCategory();
+
+  if (isError) {
+    return (
+      <ErrorBoundary FallbackComponent={ProductFetchingError}>
+        Error: {error?.message}
+      </ErrorBoundary>
+    );
+  }
+
+  if (isLoading) {
+    return <p>Loading products...</p>;
+  }
+
   return (
     <div className="md:flex gap-6">
       <div className="">
