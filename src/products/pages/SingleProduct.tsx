@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { uiRoutes } from "../../shared/constant/uiRoutes";
 import { useProductData } from "../hooks/useProductData";
-import ProductImages from "../components/ProductImages";
 
 const SingleProduct = () => {
   const { addToCart } = useCartStore();
@@ -66,7 +65,16 @@ const SingleProduct = () => {
         </div>
 
         <div className="flex md:flex-col justify-between gap-1 ">
-          <ProductImages product={product} setMainImages={setMainImages} />
+          {product.images?.map((item, index) => (
+            <div className="" key={index}>
+              <img
+                className=" w-[130px] h-[120px] object-center  "
+                alt="prod img"
+                src={item.image}
+                onClick={() => setMainImages(item)}
+              />
+            </div>
+          ))}
         </div>
 
         <div className=" flex-1 px-6 ">
