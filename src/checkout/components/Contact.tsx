@@ -80,7 +80,6 @@ const Contact = () => {
     } catch (error) {
       showBoundary(error);
       console.error("Error sending request:", error);
-      // Display a user-friendly error message
     }
   };
 
