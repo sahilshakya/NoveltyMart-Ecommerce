@@ -1,24 +1,15 @@
 import React from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-
-interface PaginationProps {
-  currentPage: number;
-  setCurrentPage: (currentPage: number) => void;
-  totalPages: number;
-}
+import { PaginationProps } from "../interfaces/pagination";
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   setCurrentPage,
   totalPages,
 }) => {
-  const nextPage = () => {
-    setCurrentPage(currentPage + 1);
-  };
+  const nextPage = () => setCurrentPage(currentPage + 1);
+  const prevPage = () => setCurrentPage(currentPage - 1);
 
-  const prevPage = () => {
-    setCurrentPage(currentPage - 1);
-  };
   const goToPage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
@@ -41,9 +32,9 @@ const Pagination: React.FC<PaginationProps> = ({
     }
     return blocks;
   };
-  if (totalPages === 1) {
-    return;
-  }
+
+  if (totalPages === 1) return;
+
   return (
     <div className="text-right mt-3 ">
       <button

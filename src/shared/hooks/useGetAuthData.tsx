@@ -10,13 +10,9 @@ const useGetAuthData = () => {
 
   const getUserDetail = useCallback(
     async (id: number) => {
-      try {
-        const resp = await fetchUserData(id);
-        if (resp) {
-          setAuthData(resp.data);
-        }
-      } catch (err) {
-        console.log("error fetching data", err);
+      const resp = await fetchUserData(id);
+      if (resp) {
+        setAuthData(resp.data);
       }
     },
     [setAuthData]

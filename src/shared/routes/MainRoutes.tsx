@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import ProductsPage from "../../products/pages/ProductsPage";
 import SingleProduct from "../../products/pages/SingleProduct";
 import CartPage from "../../cart/pages/CartPage";
-import PageNotFound from "../components/PageNotFound";
+import { PageNotFound } from "../components/PageNotFound";
 import { uiRoutes } from "../constant/uiRoutes";
 import Login from "../../login/pages/Login";
 import NavBar from "../components/NavBar";

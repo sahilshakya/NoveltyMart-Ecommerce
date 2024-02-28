@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AdaptedCategory } from "./interfaces/category";
+import { AdaptedCategory } from "../interfaces/category";
 
 interface CategoryFilterProps {
   categories: AdaptedCategory[];
