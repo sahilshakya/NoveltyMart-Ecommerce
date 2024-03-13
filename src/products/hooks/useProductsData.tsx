@@ -13,6 +13,19 @@ const useProductsData = () => {
 
   const offset = (currentPage - 1) * productsPerPage;
 
+  const fetchAllProducts = async () => {
+    const res = await fetchProducts(
+      selectedCategory,
+      sorted,
+      productsPerPage,
+      offset
+    );
+    if (res) {
+      setTotalPages(Math.ceil(parseInt(res.data.count) / productsPerPage));
+    }
+    return res.data.rows;
+  };
+
   const {
     data: products,
     isLoading,
@@ -20,18 +33,14 @@ const useProductsData = () => {
     error,
   } = useQuery({
     queryKey: ["products", selectedCategory, sorted, productsPerPage, offset],
-    queryFn: async () => {
-      const res = await fetchProducts(
-        selectedCategory,
-        sorted,
-        productsPerPage,
-        offset
-      );
-      if (res) {
-        setTotalPages(Math.ceil(parseInt(res.data.count) / productsPerPage));
-      }
-      return res.data.rows;
-    },
+    queryFn: fetchAllProducts,
+    // select: (data) =>
+    //   data.filter((product) => {
+    //     const PriceRange =
+    //       (minPrice > 0 && maxPrice < Infinity) ||
+    //       (product.price >= minPrice && product.price <= maxPrice);
+    //     return PriceRange;
+    //   }),
   });
 
   return {

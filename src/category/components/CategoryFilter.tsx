@@ -25,7 +25,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     }
   };
   return (
-    <div className=" lg:max-w-[349px] sticky top-4">
+    <div className=" lg:max-w-[349px] ">
       <p className="font-semiBold text-regularSmall">Category</p>
       <div className="py-3 flex flex-col font-semiBold ">
         {categories?.map((category) => (
@@ -50,13 +50,13 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
           <input
             type="number"
             placeholder="Min"
-            className="md:w-[108px] rounded-md focus:outline-none md:my-4 p-2"
+            className="w-full my-2  md:w-[108px] rounded-md focus:outline-none md:my-4 p-2"
             onChange={(e) => setMinPrice(+e.target.value)}
           />
           <input
             type="number"
             placeholder="Max"
-            className="md:w-[108px] rounded-md focus:outline-none md:my-4 p-2"
+            className="w-full my-2 md:w-[108px] rounded-md focus:outline-none md:my-4 p-2"
             onChange={(e) => setMaxPrice(+e.target.value)}
           />
         </div>

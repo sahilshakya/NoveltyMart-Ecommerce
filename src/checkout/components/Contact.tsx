@@ -3,15 +3,13 @@ import { useForm } from "react-hook-form";
 import { ContactSchema } from "../ContactSchema";
 import H5 from "../../shared/components/ui/H5";
 import useCartStore from "../../store/cartStore";
-import { Input } from "../../shared/components/ui/Input";
+import { Input, ReadOnlyInput } from "../../shared/components/ui/Input";
 import useAuthStore from "../../store/authStore";
 import { useEffect } from "react";
 import { IOrderRequest } from "../interfaces/orderRequest";
-import { useNavigate } from "react-router-dom";
-import { orderHandler } from "../util";
-import { uiRoutes } from "../../shared/constant/uiRoutes";
 import { formatPrice } from "../../shared/utils/common";
-import { useErrorBoundary } from "react-error-boundary";
+import { useCheckoutMutation } from "../mutation";
+import { orderHandler } from "../util";
 
 const defaultValues = {
   firstName: "",
@@ -31,7 +29,7 @@ export interface Product {
 }
 
 const Contact = () => {
-  const { cart, removeAllItems } = useCartStore();
+  const { cart } = useCartStore();
   const { user } = useAuthStore();
 
   const productOrdered = cart.map((i) => {
@@ -42,9 +40,7 @@ const Contact = () => {
     };
   });
 
-  const navigate = useNavigate();
-
-  const { showBoundary } = useErrorBoundary();
+  const id = user?.id;
 
   const total = () => {
     const price = cart.reduce(
@@ -64,22 +60,12 @@ const Contact = () => {
     defaultValues,
   });
 
-  const onSubmit = async (data: IOrderRequest) => {
-    try {
-      const resp = await orderHandler({
-        data,
-        productOrdered,
-        id: user?.id || 0,
-      });
+  const addOrder = useCheckoutMutation();
 
-      if (resp) {
-        navigate(uiRoutes.success);
-        removeAllItems();
-      }
-      return resp;
-    } catch (error) {
-      showBoundary(error);
-    }
+  const onSubmit = async (data: IOrderRequest) => {
+    const payload = await orderHandler({ data, productOrdered, id });
+
+    addOrder.mutate({ payload });
   };
 
   useEffect(() => {
@@ -105,7 +91,7 @@ const Contact = () => {
               <label className=" text-extraSmall font-regularBold text-gray-medium">
                 First Name
               </label>
-              <Input register={register} field="firstName" />
+              <ReadOnlyInput register={register} field="firstName" />
               {errors.firstName && (
                 <p className="text-error font-bold">
                   {errors.firstName.message}
@@ -117,7 +103,7 @@ const Contact = () => {
                 <label className=" text-extraSmall font-regularBold text-gray-medium">
                   Last Name
                 </label>
-                <Input register={register} field="lastName" />
+                <ReadOnlyInput register={register} field="lastName" />
                 {errors.lastName && (
                   <p className="text-error font-bold">
                     {errors.lastName.message}
@@ -130,7 +116,7 @@ const Contact = () => {
             <label className="text-extraSmall font-regularBold text-gray-medium">
               Phone Number
             </label>
-            <Input register={register} field="phone" />
+            <ReadOnlyInput register={register} field="phone" />
             {errors.phone && (
               <p className="text-error font-bold">{errors.phone.message}</p>
             )}
@@ -192,10 +178,10 @@ const Contact = () => {
               <div className="h-24 w-24 ">
                 <img
                   src={item.images[0].image}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover max-w-full"
                 />
               </div>
-              <div className="col-start-2 col-span-4">
+              <div className="lg:col-span-3">
                 <h3 className="font-bold mb-2">{item.name}</h3>
                 <p>{item.description}</p>
                 <p>Quantity:{item.quantity}</p>

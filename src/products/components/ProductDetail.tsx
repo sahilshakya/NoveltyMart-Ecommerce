@@ -26,18 +26,20 @@ export const ProductDetail = ({
     navigate(uiRoutes.cart);
   };
   return (
-    <div className="md:flex md:p-10 gap-5">
-      <img
-        className=" w-[600px] h-[630px] object-center"
-        alt="prod img"
-        src={mainImages?.image}
-      />
+    <div className="lg:flex md:py-10 gap-5 ">
+      <div className="">
+        <img
+          className=" w-full lg:w-[600px] lg:h-[630px] object-center"
+          alt="prod img"
+          src={mainImages?.image}
+        />
+      </div>
 
-      <div className="flex md:flex-col justify-between gap-1 ">
+      <div className="flex lg:flex-col justify-between gap-1 py-3 lg:p-0">
         {product.images?.map((item, index) => (
           <div className="" key={index}>
             <img
-              className=" w-[130px] h-[120px] object-center  "
+              className="w-[80px] h-full md:w-[130px] md:h-[120px] object-center  "
               alt="prod img"
               src={item.image}
               onClick={() => setMainImages(item)}
@@ -46,7 +48,7 @@ export const ProductDetail = ({
         ))}
       </div>
 
-      <div className=" flex-1 px-6 ">
+      <div className=" flex-1 lg:px-6 ">
         <div>
           <p className="text-gray-medium text-extraSmall">
             {product.brand?.name} Originals
