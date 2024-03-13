@@ -43,7 +43,6 @@ const ProductsPage = () => {
         />
         {
           <Pagination
-            products={products}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             totalPages={totalPages}
