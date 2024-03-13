@@ -41,9 +41,6 @@ export const useProductData = (id: string) => {
     [showBoundary]
   );
 
-  /**
-   * Side effect for fetching product detail on component mount
-   */
   useEffect(() => {
     id && getProductDetails(id);
   }, [id, getProductDetails]);

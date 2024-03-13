@@ -37,7 +37,6 @@ export const fetchProductDetails = async (
   const data: IResponse<Product> = await ApiRequest.get(
     ROUTES_NAME.PRODUCTS_DETAIL.replace(":id", id)
   );
-  console.log(data, "product one data");
 
   return adaptProductDetail(data);
 };

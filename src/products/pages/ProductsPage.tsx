@@ -1,16 +1,13 @@
-import H5 from "../../shared/components/ui/H5";
-import ProductCard from "../components/ProductCard";
-import CategoryFilter from "../../category/CategoryFilter";
-import Pagination from "../../shared/components/Pagination";
-import { ErrorBoundary } from "react-error-boundary";
-import ProductFetchingError from "../../shared/errors/ProductFetchingError";
-
+import CategoryFilter from "../../category/components/CategoryFilter";
+import Pagination from "../components/Pagination";
 import useCategory from "../hooks/useCategoryData";
-import useProductState from "../hooks/useProductsData";
+import useProductData from "../hooks/useProductsData";
+import { ProductList } from "../components/ProductList";
+import { ProductSort } from "../components/ProductSort";
 
 const ProductsPage = () => {
   const {
-    filteredProducts,
+    products,
     setSorted,
     currentPage,
     setCurrentPage,
@@ -19,63 +16,37 @@ const ProductsPage = () => {
     isLoading,
     isError,
     error,
-  } = useProductState();
+  } = useProductData();
 
-  const { allCategories, setMinPrice, setMaxPrice } = useCategory();
-
-  if (isError) {
-    return (
-      <ErrorBoundary FallbackComponent={ProductFetchingError}>
-        Error: {error?.message}
-      </ErrorBoundary>
-    );
-  }
-
-  if (isLoading) {
-    return <p>Loading products...</p>;
-  }
+  const { allCategories, minPrice, maxPrice, setMaxPrice, setMinPrice } =
+    useCategory();
 
   return (
     <div className="md:flex gap-6">
-      <div className="">
-        <CategoryFilter
-          categories={allCategories}
-          setMinPrice={setMinPrice}
-          setMaxPrice={setMaxPrice}
-          setSelectedCategory={setSelectedCategory}
-        />
-      </div>
+      <CategoryFilter
+        categories={allCategories}
+        setMinPrice={setMinPrice}
+        setMaxPrice={setMaxPrice}
+        setSelectedCategory={setSelectedCategory}
+      />
+
       <div className="w-full">
-        <ErrorBoundary
-          FallbackComponent={ProductFetchingError}
-          onError={() => console.log("Error Happened")}
-        >
-          <div className="flex justify-between gap-4">
-            <H5>Products</H5>
-            <div>
-              <select
-                onChange={(e) => setSorted(e.target.value)}
-                className="px-3 py-1 rounded-md outline-1"
-              >
-                <option value="">All</option>
-                <option value="desc">Most Recent</option>
-                <option value="asc">Most Oldest</option>
-              </select>
-            </div>
-          </div>
+        <ProductSort setSorted={setSorted} />
 
-          <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-4 mt-5">
-            {filteredProducts?.map((product) => (
-              <ProductCard product={product} key={product.id} />
-            ))}
-          </div>
+        <ProductList
+          products={products}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          isLoading={isLoading}
+          isError={isError}
+          error={error}
+        />
 
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPages={totalPages}
-          />
-        </ErrorBoundary>
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );

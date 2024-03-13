@@ -21,7 +21,6 @@ const useCartStore = create<CartState>()(
               (item) => item.id === product.id
             );
             const availableQuantity = product.quantity;
-            console.log(availableQuantity);
 
             if (existingItem) {
               return {

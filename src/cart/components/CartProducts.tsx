@@ -36,8 +36,6 @@ const CartProducts = () => {
     updateQuantity(productId, newQuantity);
   };
 
-  console.log("........cart...........", cart);
-
   if (cart.length === 0) {
     return (
       <div className=" bg-white w-full mr-5 p-5">

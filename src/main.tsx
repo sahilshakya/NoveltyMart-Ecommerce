@@ -13,10 +13,7 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ErrorBoundary
-      FallbackComponent={SomethingWentWrong}
-      onError={() => console.log("Error Happened")}
-    >
+    <ErrorBoundary FallbackComponent={SomethingWentWrong}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <App />

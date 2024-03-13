@@ -3,7 +3,6 @@ import { BASE_URL } from "../constant/api";
 
 export const ApiRequest: AxiosInstance = axios.create({
   baseURL: BASE_URL,
-  // baseURL: "https://dev.vitafyhealth.com",
 });
 
 ApiRequest.interceptors.request.use(
@@ -28,8 +27,6 @@ ApiRequest.interceptors.response.use(
     return response.data;
   },
   function (error) {
-    console.log(error);
-
     // Do something with response error
     return Promise.reject(error);
   }

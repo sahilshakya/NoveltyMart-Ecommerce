@@ -79,7 +79,6 @@ const Contact = () => {
       return resp;
     } catch (error) {
       showBoundary(error);
-      console.error("Error sending request:", error);
     }
   };
 

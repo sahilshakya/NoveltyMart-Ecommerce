@@ -5,20 +5,16 @@ import { ILoginRequest } from "./interfaces/loginRequest";
 import { User } from "../shared/interfaces/userType";
 
 export const LoginHandler = async ({ data }: { data: ILoginRequest }) => {
-  try {
-    const payload = {
-      email: data.email,
-      password: data.password,
-    };
-    const loginReq = await login(payload);
-    if (loginReq) {
-      const token = loginReq.data.token;
-      setLocal("authToken", token);
-      // setAuthData(token);
-      const decoded: User = jwtDecode(token);
-      return decoded;
-    }
-  } catch (err) {
-    console.log(err);
+  const payload = {
+    email: data.email,
+    password: data.password,
+  };
+  const loginReq = await login(payload);
+  if (loginReq) {
+    const token = loginReq.data.token;
+    setLocal("authToken", token);
+    // setAuthData(token);
+    const decoded: User = jwtDecode(token);
+    return decoded;
   }
 };
