@@ -1,12 +1,11 @@
-import React from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { PaginationProps } from "../interfaces/pagination";
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination = ({
   currentPage,
   setCurrentPage,
   totalPages,
-}) => {
+}: PaginationProps) => {
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
 

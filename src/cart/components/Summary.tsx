@@ -12,7 +12,7 @@ const Summary = () => {
   const totalPrice = () =>
     cart.reduce((total, item) => total + item.price * item.quantity, 0);
   return (
-    <div className="bg-white md:w-[367px] p-4 shadow-sm h-[275px]">
+    <div className="bg-white lg:w-[367px] p-4 shadow-sm h-[275px] mt-3 lg:mt-0">
       <h1 className="text-small font-semiBold">Summary</h1>
       <div className="mt-10">
         <div className="mb-2 lg:flex lg:justify-between">

@@ -9,6 +9,7 @@ export const LoginHandler = async ({ data }: { data: ILoginRequest }) => {
     email: data.email,
     password: data.password,
   };
+
   const loginReq = await login(payload);
   if (loginReq) {
     const token = loginReq.data.token;

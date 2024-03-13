@@ -1,7 +1,7 @@
 import CategoryFilter from "../../category/components/CategoryFilter";
 import Pagination from "../components/Pagination";
 import useCategory from "../hooks/useCategoryData";
-import useProductData from "../hooks/useProductsData";
+import useProductsData from "../hooks/useProductsData";
 import { ProductList } from "../components/ProductList";
 import { ProductSort } from "../components/ProductSort";
 
@@ -16,7 +16,7 @@ const ProductsPage = () => {
     isLoading,
     isError,
     error,
-  } = useProductData();
+  } = useProductsData();
 
   const { allCategories, minPrice, maxPrice, setMaxPrice, setMinPrice } =
     useCategory();
@@ -41,12 +41,14 @@ const ProductsPage = () => {
           isError={isError}
           error={error}
         />
-
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-        />
+        {
+          <Pagination
+            products={products}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+          />
+        }
       </div>
     </div>
   );

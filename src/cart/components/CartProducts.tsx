@@ -50,9 +50,9 @@ const CartProducts = () => {
   }
 
   return (
-    <div className=" lg:w-[1106px] :w-[1106px] flex flex-col gap-4">
+    <div className=" w-full lg:w-[1106px]  flex flex-col gap-4">
       {cart.map((item) => (
-        <div className="bg-white p-10 w-full md:flex" key={item.id}>
+        <div className="bg-white p-4 md:p-10 w-full md:flex" key={item.id}>
           <div>
             <img
               src={item.images[0].image}
@@ -60,9 +60,11 @@ const CartProducts = () => {
             />
           </div>
           <div className="md:mx-5 w-3/6 ">
-            <h1 className="text-small font-semiBold">{item.name}</h1>
-            <p className="mt-2 text-gray-medium text-extraSmall">
-              Product description, Size, Color
+            <h1 className="text-small font-semiBold mt-3 md:mt-0">
+              {item.name}
+            </h1>
+            <p className="mt-2 text-gray-dark text-extraSmall ">
+              Product description
             </p>
             <p className="mt-1 text-gray-medium text-extraSmall">
               {item.description}
@@ -99,8 +101,8 @@ const CartProducts = () => {
               </div>
             </div>
             <div className="">
-              <p className="font-bold ">Price</p>
-              <p className="my-4 font-semiBold text-gray-medium">
+              <p className="font-bold mt-2 md:mt-0 ">Price</p>
+              <p className="my-3 font-semiBold text-gray-medium">
                 {formatPrice(item.price * item.quantity)}
               </p>
             </div>

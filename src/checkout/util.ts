@@ -1,17 +1,21 @@
-import { order } from "./orderService";
 import { Product } from "./components/Contact";
 import { IOrderRequest } from "./interfaces/orderRequest";
 
-export const orderHandler = async ({
+export interface Orders extends IOrderRequest {
+  products: Product[];
+  userId: number | undefined;
+}
+
+export const orderHandler = ({
   data,
   productOrdered,
   id,
 }: {
   data: IOrderRequest;
   productOrdered: Product[];
-  id: number;
+  id: number | undefined;
 }) => {
-  const payload = {
+  const payload: Orders = {
     firstName: data.firstName,
     lastName: data.lastName,
     phone: data.phone,
@@ -24,6 +28,8 @@ export const orderHandler = async ({
     userId: id,
   };
 
-  const orderReq = await order(payload);
-  return orderReq;
+  // const orderReq = await order(payload);
+  // return orderReq;
+
+  return payload;
 };

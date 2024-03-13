@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { BASE_URL } from "../constant/api";
+import { removeLocal } from "../utils/storage";
 
 export const ApiRequest: AxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -28,6 +29,9 @@ ApiRequest.interceptors.response.use(
   },
   function (error) {
     // Do something with response error
+    if (error.response && error.response.status === 401) {
+      removeLocal("authToken");
+    }
     return Promise.reject(error);
   }
 );
