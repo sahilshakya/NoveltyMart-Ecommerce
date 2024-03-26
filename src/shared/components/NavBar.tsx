@@ -31,8 +31,8 @@ const NavBar = () => {
   };
 
   return (
-    <div className=" lg:flex justify-between p-5 md:px-[120px] sticky">
-      <Link to={uiRoutes.products}>
+    <div className=" lg:flex justify-between p-5 lg:px-[120px] sticky">
+      <Link to={uiRoutes.home}>
         <H5 styles="text-primary">NoveltyMart</H5>
       </Link>
 

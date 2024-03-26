@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ContactSchema } from "../ContactSchema";
-import H5 from "../../shared/components/ui/H5";
 import useCartStore from "../../store/cartStore";
 import { Input, ReadOnlyInput } from "../../shared/components/ui/Input";
 import useAuthStore from "../../store/authStore";
@@ -82,11 +81,11 @@ const Contact = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="md:flex gap-6 justify-between"
+        className="grid lg:grid-cols-3 lg:gap-6 sm:grid-cols-1"
       >
-        <div className="bg-white p-5 md:w-[857px]">
+        <div className="bg-white p-5 lg:col-span-2">
           <h3 className="font-bold">Contact Information</h3>
-          <div className="flex gap-5">
+          <div className="grid grid-cols-2 gap-5">
             <div>
               <label className=" text-extraSmall font-regularBold text-gray-medium">
                 First Name
@@ -121,7 +120,7 @@ const Contact = () => {
               <p className="text-error font-bold">{errors.phone.message}</p>
             )}
           </div>
-          <h3 className="mt-3 font-bold">Contact Information</h3>
+          <h3 className="mt-3 font-bold">Shipping Address</h3>
           <div>
             <label className="text-extraSmall font-regularBold text-gray-medium">
               Address Line 1
@@ -171,17 +170,18 @@ const Contact = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white md:w-[599px] p-3 shadow-sm ">
-          <H5>Order Summary</H5>
+
+        <div className="bg-white p-3 shadow-sm w-full">
+          <h3 className="text-h6 font-bold">Order Summary</h3>
           {cart.map((item) => (
-            <div key={item.id} className="lg:grid grid-cols-4 gap-3 mt-3">
-              <div className="h-24 w-24 ">
+            <div key={item.id} className="lg:flex mt-3">
+              <div className=" lg:w-1/4">
                 <img
                   src={item.images[0].image}
-                  className="w-full h-full object-cover max-w-full"
+                  className="object-cover lg:w-full lg:h-[100px] h-[137px] w-[179px] p-2"
                 />
               </div>
-              <div className="lg:col-span-3">
+              <div className="lg:w-3/4">
                 <h3 className="font-bold mb-2">{item.name}</h3>
                 <p>{item.description}</p>
                 <p>Quantity:{item.quantity}</p>

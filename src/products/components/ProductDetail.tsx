@@ -29,7 +29,7 @@ export const ProductDetail = ({
     <div className="lg:flex md:py-10 gap-5 ">
       <div className="">
         <img
-          className=" w-full lg:w-[600px] lg:h-[630px] object-center"
+          className=" w-full lg:w-[580px] lg:h-[610px] object-center"
           alt="prod img"
           src={mainImages?.image}
         />
