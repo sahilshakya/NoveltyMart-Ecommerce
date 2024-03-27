@@ -21,8 +21,8 @@ const Pagination = ({
           onClick={() => goToPage(i)}
           className={
             currentPage === i
-              ? "bg-primary text-white px-2 py-1 mx-1 "
-              : "bg-white px-2 py-1 mx-1"
+              ? "bg-primary text-white w-[1.75rem] h-[1.75rem] mx-1"
+              : "bg-white w-[1.75rem] h-[1.75rem] mx-1"
           }
         >
           {i}
@@ -35,18 +35,18 @@ const Pagination = ({
   if (totalPages === 1) return;
 
   return (
-    <div className="text-right mt-3 ">
+    <div className="flex mt-3 ">
       <button
         onClick={prevPage}
         disabled={currentPage === 1}
-        className="bg-white p-2"
+        className="bg-white w-7 h-7 mx-1 ml-auto flex justify-center items-center"
       >
         <MdKeyboardArrowLeft />
       </button>
-      <span>{numberOfPages()}</span>
+      {numberOfPages()}
       <button
         onClick={nextPage}
-        className="bg-white p-2"
+        className="bg-white w-7 h-7 mx-1 flex justify-center items-center"
         disabled={currentPage >= totalPages}
       >
         <MdKeyboardArrowRight />

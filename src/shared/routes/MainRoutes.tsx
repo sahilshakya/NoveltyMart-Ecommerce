@@ -21,6 +21,7 @@ const MainRoutes = () => {
         </Route>
         <Route element={<DashboardLayout />}>
           <Route path={uiRoutes.products} element={<ProductsPage />} />
+          <Route path={uiRoutes.home} element={<ProductsPage />} />
           <Route path={uiRoutes.productDetail} element={<SingleProduct />} />
           <Route path={uiRoutes.cart} element={<CartPage />} />
           <Route element={<Protected />}>

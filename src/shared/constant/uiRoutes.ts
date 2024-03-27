@@ -1,5 +1,6 @@
 export const uiRoutes = {
-  products: "/",
+  home: "/",
+  products: "/products",
   cart: "/cart",
   login: "/login",
   productDetail: "/products/:id",

@@ -56,17 +56,17 @@ const CartProducts = () => {
           <div>
             <img
               src={item.images[0].image}
-              className="h-[137px] w-[179px] object-cover"
+              className="h-[137px] w-[179px] object-cover "
             />
           </div>
-          <div className="md:mx-5 w-3/6 ">
+          <div className="mx-1 md:mx-5 md:w-3/6 mr-1">
             <h1 className="text-small font-semiBold mt-3 md:mt-0">
               {item.name}
             </h1>
-            <p className="mt-2 text-gray-dark text-extraSmall ">
+            <p className=" mt-2 text-gray-dark text-extraSmall ">
               Product description
             </p>
-            <p className="mt-1 text-gray-medium text-extraSmall">
+            <p className=" mt-1 text-gray-medium text-extraSmall">
               {item.description}
             </p>
             <div className="text-h6 mt-4">
@@ -78,7 +78,7 @@ const CartProducts = () => {
               </button>
             </div>
           </div>
-          <div className="md:flex justify-center w-1/6 ">
+          <div className="md:flex justify-center md:w-2/6 ">
             <div className="mr-3">
               <div className="font-bold">Quantity</div>
               <div className="  ">
@@ -100,8 +100,8 @@ const CartProducts = () => {
                 )}
               </div>
             </div>
-            <div className="">
-              <p className="font-bold mt-2 md:mt-0 ">Price</p>
+            <div className="md:w-1/6">
+              <p className="font-bold ">Price</p>
               <p className="my-3 font-semiBold text-gray-medium">
                 {formatPrice(item.price * item.quantity)}
               </p>
