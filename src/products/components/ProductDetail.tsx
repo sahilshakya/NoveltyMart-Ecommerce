@@ -5,6 +5,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { uiRoutes } from "../../shared/constant/uiRoutes";
 import { ProductDetailProps } from "../interfaces/productDetail";
+import {
+  GoChevronDown,
+  GoChevronLeft,
+  GoChevronRight,
+  GoChevronUp,
+} from "react-icons/go";
+import { useState } from "react";
+import { IconButton, useMediaQuery } from "@mui/material";
 
 export const ProductDetail = ({
   product,
@@ -13,6 +21,8 @@ export const ProductDetail = ({
   mainImages,
   setMainImages,
 }: ProductDetailProps) => {
+  const [startIndex, setStartIndex] = useState(0);
+  const islargeScreen = useMediaQuery("(min-width:1024px)");
   const { addToCart } = useCartStore();
   const navigate = useNavigate();
 
@@ -25,6 +35,18 @@ export const ProductDetail = ({
     addToCart(productToBuy, quantity.value);
     navigate(uiRoutes.cart);
   };
+
+  const handleNext = () => {
+    if (startIndex + 4 < product.images.length) {
+      setStartIndex(startIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (startIndex > 0) {
+      setStartIndex(startIndex - 1);
+    }
+  };
   return (
     <div className="lg:flex md:py-10 gap-5 ">
       <div className="">
@@ -35,17 +57,38 @@ export const ProductDetail = ({
         />
       </div>
 
-      <div className="flex lg:flex-col justify-between gap-1 py-3 lg:p-0">
-        {product.images?.map((item, index) => (
-          <div className="" key={index}>
-            <img
-              className="w-[80px] h-full md:w-[130px] md:h-[120px] object-center  "
-              alt="prod img"
-              src={item.image}
-              onClick={() => setMainImages(item)}
-            />
-          </div>
-        ))}
+      <div className="flex lg:flex-col gap-1 justify-between py-3 lg:p-0 items-center">
+        {islargeScreen ? (
+          <IconButton onClick={handlePrev} size="large">
+            <GoChevronUp fontSize="large" />
+          </IconButton>
+        ) : (
+          <IconButton onClick={handlePrev} size="large">
+            <GoChevronLeft fontSize="large" />
+          </IconButton>
+        )}
+        {product.images
+          ?.slice(startIndex, startIndex + 4)
+          .map((item, index) => (
+            <div className="" key={index}>
+              <img
+                className="w-[80px] h-[70px] md:w-[130px] md:h-[120px] object-center  "
+                alt="prod img"
+                src={item.image}
+                onClick={() => setMainImages(item)}
+              />
+            </div>
+          ))}
+
+        {islargeScreen ? (
+          <IconButton onClick={handleNext} size="large">
+            <GoChevronDown fontSize="large" />
+          </IconButton>
+        ) : (
+          <IconButton onClick={handleNext} size="large">
+            <GoChevronRight fontSize="large" />
+          </IconButton>
+        )}
       </div>
 
       <div className=" flex-1 lg:px-6 ">

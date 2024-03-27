@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import H5 from "./ui/H5";
 import { BsFillCartFill, BsPersonFill } from "react-icons/bs";
 import { uiRoutes } from "../constant/uiRoutes";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TbLogout2 } from "react-icons/tb";
 import useCartStore from "../../store/cartStore";
 import useAuthStore from "../../store/authStore";
@@ -30,6 +30,20 @@ const NavBar = () => {
     setDropdownOpen(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDropdownOpen && !event.target.closest(".dropdown")) {
+        setDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   return (
     <div className=" lg:flex justify-between p-5 lg:px-[120px] sticky">
       <Link to={uiRoutes.home}>
@@ -50,7 +64,7 @@ const NavBar = () => {
               </span>
             </button>
             {isDropdownOpen && (
-              <div className="absolute mt-6 w-full bg-white rounded-sm shadow-sm p-3">
+              <div className="dropdown absolute mt-6 w-full bg-white rounded-sm shadow-sm p-3">
                 <button
                   className="flex items-center px-4 text-primary"
                   onClick={handleLogout}

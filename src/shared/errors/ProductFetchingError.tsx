@@ -5,6 +5,9 @@ const ProductFetchingError = (props: FallbackProps) => {
   return (
     <div className="p-2">
       <h1 className="text-white text-normal">Error Occurred</h1>
+      <p className="text-error text-h3">
+        Something Went wrong we will try to get back at you
+      </p>
       <p className="text-error text-h3">{error.message}</p>
     </div>
   );
